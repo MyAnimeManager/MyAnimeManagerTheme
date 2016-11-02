@@ -8,7 +8,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import main.util.MAMIconFactory;
 
-
+//TODO cambiare nomi costanti
 public class MAMLookAndFeel extends MetalLookAndFeel
 {
 	
