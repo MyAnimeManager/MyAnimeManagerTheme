@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -13,6 +14,7 @@ import java.awt.Rectangle;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
+import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
@@ -34,15 +36,16 @@ public class MAMButtonUI extends BasicButtonUI
 	private static Rectangle viewRect = new Rectangle();
     private static Rectangle textRect = new Rectangle();
     private static Rectangle iconRect = new Rectangle();
-    private static Color externalColor;
-    private static Color internalColor;
-    private static Color externalRolloverColor;
-    private static Color internalRolloverColor;
+    private static Color backgroundColor;
+    private static Color backgroundGradientColor;
+    private static Color backgroundRolloverColor;
+    private static Color backgroundGradientRolloverColor;
     private static Color textColor;
     private static Color textRolloverColor;
     private static Color focusRingColor;
     private static Color focusRingRolloverColor;
     private static int focusLineDistance;
+	private static Insets margin;
  
     
 	 public static ComponentUI createUI(JComponent c) {
@@ -77,7 +80,7 @@ public class MAMButtonUI extends BasicButtonUI
             if (!(c.getParent() instanceof JToolBar)) 
             {
                 if (c.isOpaque()) {
-                	GradientPaint gradient = new GradientPaint(0, 0, externalColor, 0, c.getHeight()/2, internalColor, true);
+                	GradientPaint gradient = new GradientPaint(0, 0, backgroundColor, 0, c.getHeight()/2, backgroundGradientColor, true);
                 	Graphics2D g2 = (Graphics2D) g;
                 	g2.setPaint(gradient);
                     g2.fillRect(0, 0, c.getWidth(),c.getHeight());
@@ -103,7 +106,7 @@ public class MAMButtonUI extends BasicButtonUI
 
         if (model.isRollover() && !model.isArmed())
         {
-        	GradientPaint gradient = new GradientPaint(0, 0, externalRolloverColor, 0, c.getHeight()/2, internalRolloverColor, true);
+        	GradientPaint gradient = new GradientPaint(0, 0, backgroundRolloverColor, 0, c.getHeight()/2, backgroundGradientRolloverColor, true);
         	g2.setPaint(gradient);
         	g2.fillRect(0, 0, c.getWidth(),c.getHeight());
 
@@ -145,7 +148,7 @@ public class MAMButtonUI extends BasicButtonUI
 	protected void paintButtonPressed(Graphics g, AbstractButton b) {
         if ( b.isContentAreaFilled() ) {
             Dimension size = b.getSize();
-            GradientPaint gradient = new GradientPaint(0, 0, externalColor.darker(), 0, (int)size.getHeight()/2, internalColor.darker(), true);
+            GradientPaint gradient = new GradientPaint(0, 0, backgroundColor.darker(), 0, (int)size.getHeight()/2, backgroundGradientColor.darker(), true);
         	Graphics2D g2 = (Graphics2D) g.create();
         	g2.setPaint(gradient);
             g2.fillRect(0, 0,(int) size.getWidth(),(int)size.getHeight());
@@ -212,7 +215,6 @@ public class MAMButtonUI extends BasicButtonUI
 			
 			textRect.x = textRect.y = textRect.width = textRect.height = 0;
 			iconRect.x = iconRect.y = iconRect.width = iconRect.height = 0;
-			
 			// layout the text and icon
 			return SwingUtilities.layoutCompoundLabel(
 			b, fm, b.getText(), b.getIcon(),
@@ -222,17 +224,56 @@ public class MAMButtonUI extends BasicButtonUI
 			b.getText() == null ? 0 : b.getIconTextGap());
 		}
 	 
+	 public Dimension getPreferredSize(JComponent b)
+     {
+		 AbstractButton c = (AbstractButton) b;
+		 if(c.getComponentCount() > 0) {
+	            return null;
+	        }
+
+	        Icon icon = c.getIcon();
+	        String text = c.getText();
+
+	        Font font = c.getFont();
+	        FontMetrics fm = c.getFontMetrics(font);
+
+	        Rectangle iconR = new Rectangle();
+	        Rectangle textR = new Rectangle();
+	        Rectangle viewR = new Rectangle(Short.MAX_VALUE, Short.MAX_VALUE);
+
+	        SwingUtilities.layoutCompoundLabel(
+	            c, fm, text, icon,
+	            c.getVerticalAlignment(), c.getHorizontalAlignment(),
+	            c.getVerticalTextPosition(), c.getHorizontalTextPosition(),
+	            viewR, iconR, textR, (text == null ? 0 : c.getIconTextGap())
+	        );
+
+	        /* The preferred size of the button is the size of
+	         * the text and icon rectangles plus the buttons insets.
+	         */
+
+	        Rectangle r = iconR.union(textR);
+
+	        Insets insets = c.getInsets();
+	        r.width += insets.left + insets.right + margin.left + margin.right;
+	        r.height += insets.top + insets.bottom + margin.top + margin.bottom;
+
+	        return r.getSize();
+     }
+	 
 	 private static void setupColor()
 	 {
-	   externalColor = UIManager.getColor("Button.externalColor");
-	   internalColor = UIManager.getColor("Button.internalColor");
-	   externalRolloverColor = UIManager.getColor("Button.externalRolloverColor");
-	   internalRolloverColor = UIManager.getColor("Button.internalRolloverColor");
+	   backgroundColor = UIManager.getColor("Button.background");
+	   backgroundGradientColor = UIManager.getColor("Button.backgroundGradient");
+	   backgroundRolloverColor = UIManager.getColor("Button.backgroundRolloverColor");
+	   backgroundGradientRolloverColor = UIManager.getColor("Button.backgroundGradientRolloverColor");
 	   textColor = UIManager.getColor("Button.textColor");
 	   textRolloverColor = UIManager.getColor("Button.textRolloverColor");
 	   focusRingColor = UIManager.getColor("Button.focusRingColor");
 	   focusRingRolloverColor = UIManager.getColor("Button.focusRingRolloverColor");
 	   focusLineDistance = UIManager.getInt("Button.focusLineDistance");
+	   margin = UIManager.getInsets("Button.margin");
 	 }
-	  
+	 
+	 
 }

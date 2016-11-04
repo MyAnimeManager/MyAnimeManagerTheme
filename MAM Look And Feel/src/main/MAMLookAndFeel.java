@@ -4,12 +4,13 @@ import java.awt.Color;
 
 import javax.swing.UIDefaults;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.InsetsUIResource;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 
 import main.util.MAMIconFactory;
 
 //TODO cambiare nomi costanti
-public class MAMLookAndFeel extends MetalLookAndFeel
+public class MAMLookAndFeel extends BasicLookAndFeel
 {
 	
 	@Override
@@ -82,15 +83,16 @@ public class MAMLookAndFeel extends MetalLookAndFeel
 		super.initComponentDefaults(table);
 		
 		//BUTTON
-		Color buttonExternalColor = Color.decode("#4A4A4A");
-		Color buttonInternalColor = Color.decode("#313131");
-		Color buttonExternalRolloverColor = Color.decode("#FFFAF0");
-		Color buttonInternalRolloverColor = Color.decode("#B2AFA8");
+		Color buttonBackgroundColor = Color.decode("#4A4A4A");
+		Color buttonBackgroundGradientColor = Color.decode("#313131");
+		Color buttonBackgroundRolloverColor = Color.decode("#FFFAF0");
+		Color buttonBackgroundGradientRolloverColor = Color.decode("#B2AFA8");
 		Color buttonTextColor = Color.decode("#C8C8C8");
 		Color buttonTextRolloverColor = Color.decode("#696969");
 		Color buttonFocusRingColor = Color.decode("#A9A9A9");
 		Color buttonFocusRingRolloverColor = Color.decode("#4A4A4A");
 		Color buttonBorderColor = Color.GRAY;
+		InsetsUIResource buttonInsets = new InsetsUIResource(2, 14, 2, 14);
 		
 		//PANEL
 		Color panelExternalColor = Color.decode("#333333");
@@ -113,10 +115,10 @@ public class MAMLookAndFeel extends MetalLookAndFeel
 		Color checkColor = Color.decode("#555555");
 		
 		//TOGGLEBUTTON
-		Color toggleButtonExternalColor = Color.decode("#4A4A4A");
-		Color toggleButtonInternalColor = Color.decode("#313131");
-		Color toggleButtonExternalRolloverColor = Color.decode("#FFFAF0");
-		Color toggleButtonInternalRolloverColor = Color.decode("#B2AFA8");
+		Color toggleButtonBackgroundColor = Color.decode("#4A4A4A");
+		Color toggleButtonBackgroundGradientColor = Color.decode("#313131");
+		Color toggleButtonBackgroundRolloverColor = Color.decode("#FFFAF0");
+		Color toggleButtonBackgroundGradientRolloverColor = Color.decode("#B2AFA8");
 		Color toggleButtonTextColor = Color.decode("#C8C8C8");
 		Color toggleButtonTextRolloverColor = Color.decode("#696969");
 		Color toggleButtonFocusRingColor = Color.decode("#A9A9A9");
@@ -152,19 +154,20 @@ public class MAMLookAndFeel extends MetalLookAndFeel
 		Object[] defaults = {
 				//BUTTON
 				"Button.border", new LineBorder(buttonBorderColor, 1),
-				"Button.externalColor", buttonExternalColor,
-				"Button.internalColor", buttonInternalColor,
-				"Button.externalRolloverColor", buttonExternalRolloverColor,
-				"Button.internalRolloverColor", buttonInternalRolloverColor,
+				"Button.background", buttonBackgroundColor,
+				"Button.backgroundGradient", buttonBackgroundGradientColor,
+				"Button.backgroundRolloverColor", buttonBackgroundRolloverColor,
+				"Button.backgroundGradientRolloverColor", buttonBackgroundGradientRolloverColor,
 				"Button.textColor", buttonTextColor,
 				"Button.textRolloverColor", buttonTextRolloverColor,
 				"Button.focusRingColor", buttonFocusRingColor,
 				"Button.focusRingRolloverColor", buttonFocusRingRolloverColor,
 				"Button.focusLineDistance", 3,
+				"Button.margin", buttonInsets,
 				
 				//PANEL
-				"Panel.externalColor", panelExternalColor,
-				"Panel.internalColor", panelInternalColor,
+				"Panel.background", panelExternalColor,
+				"Panel.backgroundGradient", panelInternalColor,
 				"Panel.gradientActive", panelGradient,
 				
 				//LABEL
@@ -186,10 +189,10 @@ public class MAMLookAndFeel extends MetalLookAndFeel
 				
 				//TOGGLEBUTTON
 				"ToggleButton.border", new LineBorder(toggleButtonBorderColor, 1),
-				"ToggleButton.externalColor", toggleButtonExternalColor,
-				"ToggleButton.internalColor", toggleButtonInternalColor,
-				"ToggleButton.externalRolloverColor", toggleButtonExternalRolloverColor,
-				"ToggleButton.internalRolloverColor", toggleButtonInternalRolloverColor,
+				"ToggleButton.background", toggleButtonBackgroundColor,
+				"ToggleButton.backgroundGradient", toggleButtonBackgroundGradientColor,
+				"ToggleButton.backgroundRolloverColor", toggleButtonBackgroundRolloverColor,
+				"ToggleButton.internalRolloverColor", toggleButtonBackgroundGradientRolloverColor,
 				"ToggleButton.textColor", toggleButtonTextColor,
 				"ToggleButton.textRolloverColor", toggleButtonTextRolloverColor,
 				"ToggleButton.focusRingColor", toggleButtonFocusRingColor,

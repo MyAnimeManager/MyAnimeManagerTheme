@@ -30,10 +30,10 @@ public class MAMToggleButtonUI extends MAMButtonUI
 	
 	private static final Object MAM_TOGGLE_BUTTON_UI_KEY = new Object();
 //    private static Rectangle textRect = new Rectangle();
-    private static Color externalColor;
-    private static Color internalColor;
-    private static Color externalRolloverColor;
-    private static Color internalRolloverColor;
+    private static Color backgroundColor;
+    private static Color backgroundGradientColor;
+    private static Color backgroundRolloverColor;
+    private static Color backgroundGradientRolloverColor;
     private static Color textColor;
     private static Color textRolloverColor;
     private static Color focusRingColor;
@@ -91,7 +91,7 @@ public class MAMToggleButtonUI extends MAMButtonUI
 	
 	        if (model.isRollover() && !model.isArmed())
 	        {
-	        	GradientPaint gradient = new GradientPaint(0, 0, externalRolloverColor, 0, c.getHeight()/2, internalRolloverColor, true);
+	        	GradientPaint gradient = new GradientPaint(0, 0, backgroundRolloverColor, 0, c.getHeight()/2, backgroundGradientRolloverColor, true);
 	        	g2.setPaint(gradient);
 	        	g2.fillRect(0, 0, c.getWidth(),c.getHeight());
 	
@@ -136,7 +136,7 @@ public class MAMToggleButtonUI extends MAMButtonUI
 	 protected void paintButtonPressed(Graphics g, AbstractButton b) {
 	        if ( b.isContentAreaFilled() ) {
 	            Dimension size = b.getSize();
-	            GradientPaint gradient = new GradientPaint(0, 0, externalColor.darker(), 0, (int)size.getHeight()/2, internalColor.darker(), true);
+	            GradientPaint gradient = new GradientPaint(0, 0, backgroundColor.darker(), 0, (int)size.getHeight()/2, backgroundGradientColor.darker(), true);
 	        	Graphics2D g2 = (Graphics2D) g.create();
 	        	g2.setPaint(gradient);
 	            g2.fillRect(0, 0,(int) size.getWidth(),(int)size.getHeight());
@@ -206,10 +206,10 @@ public class MAMToggleButtonUI extends MAMButtonUI
 	 
 	 private static void setupColor()
 	 {
-	   externalColor = UIManager.getColor("ToggleButton.externalColor");
-	   internalColor = UIManager.getColor("ToggleButton.internalColor");
-	   externalRolloverColor = UIManager.getColor("ToggleButton.externalRolloverColor");
-	   internalRolloverColor = UIManager.getColor("ToggleButton.internalRolloverColor");
+	   backgroundColor = UIManager.getColor("ToggleButton.background");
+	   backgroundGradientColor = UIManager.getColor("ToggleButton.backgroundGradient");
+	   backgroundRolloverColor = UIManager.getColor("ToggleButton.backgroundRolloverColor");
+	   backgroundGradientRolloverColor = UIManager.getColor("ToggleButton.backgroundGradientRolloverColor");
 	   textColor = UIManager.getColor("ToggleButton.textColor");
 	   textRolloverColor = UIManager.getColor("ToggleButton.textRolloverColor");
 	   focusRingColor = UIManager.getColor("ToggleButton.focusRingColor");

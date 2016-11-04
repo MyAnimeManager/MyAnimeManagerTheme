@@ -17,8 +17,8 @@ import sun.awt.AppContext;
 public class MAMPanelUI extends BasicPanelUI
 {
 	private static final Object MAM_PANEL_UI_KEY = new Object();
-	private static Color externalColor;
-    private static Color internalColor;
+	private static Color backgroundColor;
+    private static Color backgroundGradientColor;
     private static boolean gradientActive;
 
 
@@ -43,13 +43,13 @@ public class MAMPanelUI extends BasicPanelUI
 	        {
 	        	if (gradientActive)
 	        	{
-			    	GradientPaint gradient = new GradientPaint(0, 0, externalColor, 0, c.getHeight()/2, internalColor, true);
+			    	GradientPaint gradient = new GradientPaint(0, 0, backgroundColor, 0, c.getHeight()/2, backgroundGradientColor, true);
 			    	g2.setPaint(gradient);
 			        g2.fillRect(0, 0, c.getWidth(),c.getHeight());
 	        	}
 	        	else
 	        	{
-			    	g2.setColor(externalColor);
+			    	g2.setColor(backgroundColor);
 			        g2.fillRect(0, 0, c.getWidth(),c.getHeight());
 	        	}
 	        }
@@ -64,8 +64,8 @@ public class MAMPanelUI extends BasicPanelUI
 	
 	 public static void setupColor()
 	 {
-	   externalColor = UIManager.getColor("Panel.externalColor");
-	   internalColor = UIManager.getColor("Panel.internalColor");
+	   backgroundColor = UIManager.getColor("Panel.background");
+	   backgroundGradientColor = UIManager.getColor("Panel.backgroundGradient");
 	   gradientActive = UIManager.getBoolean("Panel.gradientActive");
 	 }
 	
