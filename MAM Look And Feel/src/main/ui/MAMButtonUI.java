@@ -68,12 +68,6 @@ public class MAMButtonUI extends BasicButtonUI
         {
             if (!(c.getParent() instanceof JToolBar)) 
             {
-            	if (c.isOpaque()) {
-                	GradientPaint gradient = new GradientPaint(0, 0, backgroundColor, 0, c.getHeight()/2, backgroundGradientColor, true);
-                	Graphics2D g2 = (Graphics2D) g;
-                	g2.setPaint(gradient);
-                    g2.fillRect(0, 0, c.getWidth(),c.getHeight());
-                }
                 paint(g, c);
             }
         }
@@ -92,6 +86,10 @@ public class MAMButtonUI extends BasicButtonUI
         String text = layout(b, SwingUtilities2.getFontMetrics(b, g), b.getWidth(), b.getHeight());
 
         clearTextShiftOffset();
+        
+        GradientPaint paint = new GradientPaint(0, 0, backgroundColor, 0, c.getHeight()/2, backgroundGradientColor, true);
+        g2.setPaint(paint);
+        g2.fillRect(0, 0, c.getWidth(), c.getHeight());
         
         if (animating && !model.isArmed())
         {
@@ -343,13 +341,7 @@ public class MAMButtonUI extends BasicButtonUI
 			});
 		 }
 	 }
-	 
-//	 private void resetRolloverColor()
-//	 {
-//		backgroundRolloverActualColor = backgroundColor;
-//		backgroundGradientRolloverActualColor= backgroundGradientColor;
-//	 }
-	 	 
+
 	 private static void setupColor()
 	 {
 	   backgroundColor = backgroundRolloverActualColor = UIManager.getColor("Button.background");
