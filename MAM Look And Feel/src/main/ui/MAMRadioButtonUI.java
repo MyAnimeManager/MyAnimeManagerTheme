@@ -26,7 +26,6 @@ import sun.swing.SwingUtilities2;
 
 public class MAMRadioButtonUI extends BasicRadioButtonUI
 {
-	private static final Object MAM_RADIOBUTTON_UI_KEY = new Object();
 	private boolean defaults_initialized = false;
 	private static Dimension size = new Dimension();
 	private  Rectangle viewRect = new Rectangle();
@@ -37,22 +36,13 @@ public class MAMRadioButtonUI extends BasicRadioButtonUI
 	private static Color textColor;
 	
 	public static ComponentUI createUI(JComponent c) {
-		AppContext appContext = AppContext.getAppContext();
-		MAMRadioButtonUI metalButtonUI =
-                (MAMRadioButtonUI) appContext.get(MAM_RADIOBUTTON_UI_KEY);
-        if (metalButtonUI == null) {
-            metalButtonUI = new MAMRadioButtonUI();
-            appContext.put(MAM_RADIOBUTTON_UI_KEY, metalButtonUI);
-        }
-
         setupColor();
-        return metalButtonUI;
+        return new MAMRadioButtonUI();
     }
 
 	@Override
 	protected void installDefaults(AbstractButton b) 
 	{
-//		super.installDefaults(b);
 		if(!defaults_initialized) {
 	        icon = UIManager.getIcon("RadioButton.icon");
             defaults_initialized = true;

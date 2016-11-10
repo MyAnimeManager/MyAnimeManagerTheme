@@ -13,28 +13,19 @@ import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 
-import sun.awt.AppContext;
 import sun.swing.SwingUtilities2;
 
 
 public class MAMCheckBoxUI extends MAMRadioButtonUI
 {
 	
-	private static final Object MAM_CHECKBOX_UI_KEY = new Object();
 	private boolean defaults_initialized = false;
 	private static Icon icon;
 	private static Color textColor;
 	
 	public static ComponentUI createUI(JComponent c) {
-		AppContext appContext = AppContext.getAppContext();
-		MAMCheckBoxUI metalButtonUI =
-                (MAMCheckBoxUI) appContext.get(MAM_CHECKBOX_UI_KEY);
-        if (metalButtonUI == null) {
-            metalButtonUI = new MAMCheckBoxUI();
-            appContext.put(MAM_CHECKBOX_UI_KEY, metalButtonUI);
-        }
         setupColor();     
-        return metalButtonUI;
+        return new MAMCheckBoxUI();
     }
 	@Override
 	protected void installDefaults(AbstractButton b) 

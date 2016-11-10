@@ -45,15 +45,8 @@ public class MAMToggleButtonUI extends MAMButtonUI
     
     public static ComponentUI createUI(JComponent c) 
 	 {
-        AppContext appContext = AppContext.getAppContext();
-        MAMToggleButtonUI metalButtonUI =
-                (MAMToggleButtonUI) appContext.get(MAM_TOGGLE_BUTTON_UI_KEY);
-        if (metalButtonUI == null) {
-            metalButtonUI = new MAMToggleButtonUI();
-            appContext.put(MAM_TOGGLE_BUTTON_UI_KEY, metalButtonUI);
-        }
         setupColor();
-        return metalButtonUI;
+        return new MAMToggleButtonUI();
 	 }
 	
 	 @Override

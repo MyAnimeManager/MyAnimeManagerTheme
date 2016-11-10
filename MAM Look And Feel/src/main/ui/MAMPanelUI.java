@@ -11,27 +11,17 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicPanelUI;
 
-import sun.awt.AppContext;
-
 
 public class MAMPanelUI extends BasicPanelUI
 {
-	private static final Object MAM_PANEL_UI_KEY = new Object();
 	private static Color backgroundColor;
     private static Color backgroundGradientColor;
     private static boolean gradientActive;
 
 
 	public static ComponentUI createUI(JComponent c) {
-		AppContext appContext = AppContext.getAppContext();
-		MAMPanelUI metalButtonUI =
-                (MAMPanelUI) appContext.get(MAM_PANEL_UI_KEY);
-        if (metalButtonUI == null) {
-            metalButtonUI = new MAMPanelUI();
-            appContext.put(MAM_PANEL_UI_KEY, metalButtonUI);
-        }
         setupColor();
-        return metalButtonUI;
+        return new MAMPanelUI();
     }
 	
 	@Override

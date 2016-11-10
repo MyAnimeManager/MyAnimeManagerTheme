@@ -11,13 +11,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
@@ -25,14 +31,11 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.View;
 
-import sun.awt.AppContext;
+import main.util.MAMLookAndFeelUtil;
 import sun.swing.SwingUtilities2;
 
 public class MAMButtonUI extends BasicButtonUI
 {
-
-	
-	private static final Object MAM_BUTTON_UI_KEY = new Object();
 	private static Rectangle viewRect = new Rectangle();
     private static Rectangle textRect = new Rectangle();
     private static Rectangle iconRect = new Rectangle();
@@ -40,46 +43,32 @@ public class MAMButtonUI extends BasicButtonUI
     private static Color backgroundGradientColor;
     private static Color backgroundRolloverColor;
     private static Color backgroundGradientRolloverColor;
+    private static Color backgroundRolloverActualColor;
+    private static Color backgroundGradientRolloverActualColor;
     private static Color textColor;
     private static Color textRolloverColor;
     private static Color focusRingColor;
     private static Color focusRingRolloverColor;
     private static int focusLineDistance;
 	private static Insets margin;
- 
+	private float transparency = 0;
+	private boolean animating = false;
+	Timer fadeInTimer;
+	Timer fadeOutTimer;
     
 	 public static ComponentUI createUI(JComponent c) {
-	        AppContext appContext = AppContext.getAppContext();
-	        MAMButtonUI metalButtonUI =
-	                (MAMButtonUI) appContext.get(MAM_BUTTON_UI_KEY);
-	        if (metalButtonUI == null) {
-	            metalButtonUI = new MAMButtonUI();
-	            appContext.put(MAM_BUTTON_UI_KEY, metalButtonUI);
-	        }
 	        setupColor();
-	        return metalButtonUI;
+	        return new MAMButtonUI();
 	    }
-	
+	 
 	@Override
-	/**
-     * If necessary paints the background of the component, then
-     * invokes <code>paint</code>.
-     *
-     * @param g Graphics to paint to
-     * @param c JComponent painting on
-     * @throws NullPointerException if <code>g</code> or <code>c</code> is
-     *         null
-     * @see javax.swing.plaf.ComponentUI#update
-     * @see javax.swing.plaf.ComponentUI#paint
-     * @since 1.5
-     */
     public void update(Graphics g, JComponent c) {
         AbstractButton button = (AbstractButton)c;
         if ((c.getBackground() instanceof UIResource) && button.isContentAreaFilled()) 
         {
             if (!(c.getParent() instanceof JToolBar)) 
             {
-                if (c.isOpaque()) {
+            	if (c.isOpaque()) {
                 	GradientPaint gradient = new GradientPaint(0, 0, backgroundColor, 0, c.getHeight()/2, backgroundGradientColor, true);
                 	Graphics2D g2 = (Graphics2D) g;
                 	g2.setPaint(gradient);
@@ -103,10 +92,10 @@ public class MAMButtonUI extends BasicButtonUI
         String text = layout(b, SwingUtilities2.getFontMetrics(b, g), b.getWidth(), b.getHeight());
 
         clearTextShiftOffset();
-
-        if (model.isRollover() && !model.isArmed())
+        
+        if (animating && !model.isArmed())
         {
-        	GradientPaint gradient = new GradientPaint(0, 0, backgroundRolloverColor, 0, c.getHeight()/2, backgroundGradientRolloverColor, true);
+        	GradientPaint gradient = new GradientPaint(0, 0, backgroundRolloverActualColor, 0, c.getHeight()/2, backgroundGradientRolloverActualColor, true);
         	g2.setPaint(gradient);
         	g2.fillRect(0, 0, c.getWidth(),c.getHeight());
 
@@ -261,12 +250,112 @@ public class MAMButtonUI extends BasicButtonUI
 	        return r.getSize();
      }
 	 
+	 
+	 @Override
+	 public void installUI(JComponent c)
+	 {
+		 super.installUI(c);
+		 if (c instanceof JButton)
+		 {
+			 fadeInTimer = new Timer(50, new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					transparency += 0.075f;
+					if (transparency > 1f)
+					{
+						transparency = 1f;
+						fadeInTimer.stop();
+					}
+					backgroundRolloverActualColor = new Color(MAMLookAndFeelUtil.getRedFloat(backgroundRolloverColor), MAMLookAndFeelUtil.getGreenFloat(backgroundRolloverColor), MAMLookAndFeelUtil.getBlueFloat(backgroundRolloverColor), transparency);
+					backgroundGradientRolloverActualColor = new Color(MAMLookAndFeelUtil.getRedFloat(backgroundGradientRolloverColor), MAMLookAndFeelUtil.getGreenFloat(backgroundGradientRolloverColor), MAMLookAndFeelUtil.getBlueFloat(backgroundGradientRolloverColor), transparency);
+					c.repaint();
+				}
+			});
+			 
+			 fadeOutTimer = new Timer(50, new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						transparency -= 0.075f;
+						if (transparency < 0f)
+						{
+							transparency = 0f;
+							fadeOutTimer.stop();
+						}
+						backgroundRolloverActualColor = new Color(MAMLookAndFeelUtil.getRedFloat(backgroundRolloverActualColor), MAMLookAndFeelUtil.getGreenFloat(backgroundRolloverActualColor), MAMLookAndFeelUtil.getBlueFloat(backgroundRolloverActualColor), transparency);
+						backgroundGradientRolloverActualColor = new Color(MAMLookAndFeelUtil.getRedFloat(backgroundGradientRolloverActualColor), MAMLookAndFeelUtil.getGreenFloat(backgroundGradientRolloverActualColor), MAMLookAndFeelUtil.getBlueFloat(backgroundGradientRolloverActualColor), transparency);
+						c.repaint();
+					}
+				});
+			 
+			 c.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e)
+				{
+					fadeInTimer.start();
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e)
+				{
+					if (fadeInTimer.isRunning())
+						fadeInTimer.stop();
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e)
+				{
+					fadeInTimer.stop();
+					animating = false;
+					((JButton) c).getModel().setRollover(false);
+					if (fadeOutTimer != null && !fadeOutTimer.isRunning())
+					{
+						animating = true;
+						fadeOutTimer.start();
+					}	
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e)
+				{
+					fadeOutTimer.stop();
+					animating = false;
+					((JButton) c).getModel().setRollover(true);
+					if (fadeInTimer != null && !fadeInTimer.isRunning())
+					{
+						animating = true;
+						fadeInTimer.start();
+					}
+
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e)
+				{
+					
+				}
+			});
+		 }
+	 }
+	 
+//	 private void resetRolloverColor()
+//	 {
+//		backgroundRolloverActualColor = backgroundColor;
+//		backgroundGradientRolloverActualColor= backgroundGradientColor;
+//	 }
+	 	 
 	 private static void setupColor()
 	 {
-	   backgroundColor = UIManager.getColor("Button.background");
-	   backgroundGradientColor = UIManager.getColor("Button.backgroundGradient");
+	   backgroundColor = backgroundRolloverActualColor = UIManager.getColor("Button.background");
+	   backgroundGradientColor = backgroundGradientRolloverActualColor = UIManager.getColor("Button.backgroundGradient");
 	   backgroundRolloverColor = UIManager.getColor("Button.backgroundRolloverColor");
-	   backgroundGradientRolloverColor = UIManager.getColor("Button.backgroundGradientRolloverColor");
+	   backgroundGradientRolloverColor = UIManager.getColor("Button.backgroundGradientRolloverColor");  
 	   textColor = UIManager.getColor("Button.textColor");
 	   textRolloverColor = UIManager.getColor("Button.textRolloverColor");
 	   focusRingColor = UIManager.getColor("Button.focusRingColor");
@@ -274,6 +363,5 @@ public class MAMButtonUI extends BasicButtonUI
 	   focusLineDistance = UIManager.getInt("Button.focusLineDistance");
 	   margin = UIManager.getInsets("Button.margin");
 	 }
-	 
 	 
 }

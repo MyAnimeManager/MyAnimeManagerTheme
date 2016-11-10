@@ -17,6 +17,9 @@ import main.MAMLookAndFeel;
 import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Dimension;
 
 
 public class Test extends JFrame
@@ -61,9 +64,9 @@ public class Test extends JFrame
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JProgressBar progressBar = new JProgressBar();
@@ -119,10 +122,20 @@ public class Test extends JFrame
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("New check box");
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
-		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxNewCheckBox.gridx = 0;
 		gbc_chckbxNewCheckBox.gridy = 6;
 		contentPane.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setSize(new Dimension(300, 200));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Prova", "Ciao"}));
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 0;
+		gbc_comboBox.gridy = 7;
+		contentPane.add(comboBox, gbc_comboBox);
 	}
 	
 }

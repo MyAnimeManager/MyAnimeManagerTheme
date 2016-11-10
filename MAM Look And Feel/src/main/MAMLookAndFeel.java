@@ -9,14 +9,13 @@ import javax.swing.plaf.basic.BasicLookAndFeel;
 
 import main.util.MAMIconFactory;
 
-//TODO cambiare nomi costanti
 public class MAMLookAndFeel extends BasicLookAndFeel
 {
 	
 	@Override
 	public String getName()
 	{
-		return null;
+		return "MAMSkin";
 	}
 	
 	@Override
@@ -56,7 +55,7 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 				"RadioButtonUI", MAMPackageName + "MAMRadioButtonUI",
 				"ToggleButtonUI", MAMPackageName + "MAMToggleButtonUI",
 				"ProgressBarUI", MAMPackageName + "MAMProgressBarUI",
-//                 "ComboBoxUI", MAMPackageName + "MAMComboBoxUI",
+                "ComboBoxUI", MAMPackageName + "MAMComboBoxUI",
 //              "DesktopIconUI", MAMPackageName + "MAMDesktopIconUI",
 //              "FileChooserUI", MAMPackageName + "MAMFileChooserUI",
 //            "InternalFrameUI", MAMPackageName + "MAMInternalFrameUI",
@@ -150,6 +149,18 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 		Color textfieldSelectionBackground = Color.decode("#696969");
 		Color textfieldSelectionForeground = Color.decode("#FFFFFF");
 		
+		//COMBOBOX
+		
+		Color comboBoxBackground = Color.decode("#4A4A4A");
+		Color comboBoxTextColor = Color.decode("#C8C8C8");
+		Color comboBoxInactiveBackground = comboBoxBackground.darker();
+		Color comboBoxInactiveForeground = comboBoxTextColor.brighter();
+		Color comboBoxBorderColor = Color.GRAY;
+		Color comboBoxSelectionBackground = Color.decode("#696969");
+		Color comboBoxSelectionForeground = Color.decode("#FFFFFF");
+		Color comboBoxArrowButtonColor = Color.GRAY;
+		Color comboBoxArrowDisabledButtonColor = Color.BLACK;
+		
 		//DEFAULTS
 		Object[] defaults = {
 				//BUTTON
@@ -226,7 +237,20 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 				"TextField.inactiveBackground", textfieldInactiveBackground,
 				"TextField.inactiveForeground", textfieldInactiveForeground,
 				"TextField.selectionBackground", textfieldSelectionBackground,
-				"TextField.selectionForeground", textfieldSelectionForeground
+				"TextField.selectionForeground", textfieldSelectionForeground,
+				
+				//COMBOBOX
+				"ComboBox.background", comboBoxBackground,
+				"ComboBox.disabledBackground", comboBoxInactiveBackground,
+				"ComboBox.foreground", comboBoxTextColor,
+				"ComboBox.disabledForeground", comboBoxInactiveForeground,
+				"ComboBox.selectionBackground", comboBoxSelectionBackground,
+				"ComboBox.selectionForeground", comboBoxSelectionForeground,
+				"ComboBox.border", new LineBorder(comboBoxBorderColor, 1),
+				"ComboBox.arrowButtonColor", comboBoxArrowButtonColor,
+				"ComboBox.arrowDisabledButtonColor", comboBoxArrowDisabledButtonColor
+				
+				
 		};
 		table.putDefaults(defaults);
 	}

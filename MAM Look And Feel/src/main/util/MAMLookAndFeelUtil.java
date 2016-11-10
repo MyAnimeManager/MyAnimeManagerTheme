@@ -58,4 +58,22 @@ public class MAMLookAndFeelUtil
 
 		return blurred;
 	}
+	
+	public static float getRedFloat(Color color)
+	{
+		float red = color.getRed()/255f;
+		return red;
+	}
+	
+	public static float getGreenFloat(Color color)
+	{
+		float green = color.getGreen()/255f;
+		return green;
+	}
+	
+	public static float getBlueFloat(Color color)
+	{
+		float blue = color.getBlue()/255f;
+		return blue;
+	}
 }

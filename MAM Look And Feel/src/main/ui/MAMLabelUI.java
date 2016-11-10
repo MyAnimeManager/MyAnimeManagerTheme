@@ -9,25 +9,16 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicLabelUI;
 
-import sun.awt.AppContext;
 import sun.swing.SwingUtilities2;
 
 
 public class MAMLabelUI extends BasicLabelUI
 {
-	private static final Object MAM_LABEL_UI_KEY = new Object();
 	private static Color textColor;
 	
 	public static ComponentUI createUI(JComponent c) {
-		AppContext appContext = AppContext.getAppContext();
-		MAMLabelUI metalButtonUI =
-                (MAMLabelUI) appContext.get(MAM_LABEL_UI_KEY);
-        if (metalButtonUI == null) {
-            metalButtonUI = new MAMLabelUI();
-            appContext.put(MAM_LABEL_UI_KEY, metalButtonUI);
-        }
         setupColor();
-        return metalButtonUI;
+        return new MAMLabelUI();
     }
 
 	protected void paintEnabledText(JLabel l, Graphics g, String s, int textX, int textY)
