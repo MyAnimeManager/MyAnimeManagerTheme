@@ -123,8 +123,8 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 		Color toggleButtonFocusRingColor = Color.decode("#A9A9A9");
 		Color toggleButtonFocusRingRolloverColor = Color.decode("#4A4A4A");
 		Color toggleButtonBorderColor = Color.GRAY;
-		Color selectedExternalColor = Color.decode("#696969");
-		Color selectedInternalColor = Color.decode("#464646");
+		Color selectedColor = Color.decode("#696969");
+		Color selectedGradientColor = Color.decode("#464646");
 		
 		//PROGRESSBAR
 		Color progressBarBackground = Color.decode("#555555");
@@ -203,13 +203,13 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 				"ToggleButton.background", toggleButtonBackgroundColor,
 				"ToggleButton.backgroundGradient", toggleButtonBackgroundGradientColor,
 				"ToggleButton.backgroundRolloverColor", toggleButtonBackgroundRolloverColor,
-				"ToggleButton.internalRolloverColor", toggleButtonBackgroundGradientRolloverColor,
+				"ToggleButton.backgroundGradientRolloverColor", toggleButtonBackgroundGradientRolloverColor,
 				"ToggleButton.textColor", toggleButtonTextColor,
 				"ToggleButton.textRolloverColor", toggleButtonTextRolloverColor,
 				"ToggleButton.focusRingColor", toggleButtonFocusRingColor,
 				"ToggleButton.focusRingRolloverColor", toggleButtonFocusRingRolloverColor,
-				"ToggleButton.selectedExternalColor", selectedExternalColor,
-				"ToggleButton.selectedInternalColor", selectedInternalColor,
+				"ToggleButton.selectedColor", selectedColor,
+				"ToggleButton.selectedGradientColor", selectedGradientColor,
 				"ToggleButton.focusLineDistance", 3,
 				
 				//PROGRESSBAR

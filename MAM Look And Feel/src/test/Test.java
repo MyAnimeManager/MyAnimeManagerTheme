@@ -20,6 +20,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class Test extends JFrame
@@ -106,7 +108,19 @@ public class Test extends JFrame
 		gbc_btnNewButton.gridy = 3;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
 		
-		JToggleButton tglbtnNewToggleButton = new JToggleButton("New toggle button");
+		JToggleButton tglbtnNewToggleButton = new JToggleButton("Disattivo");
+		tglbtnNewToggleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JToggleButton button = (JToggleButton)e.getSource();
+				if (button.isSelected())
+				{
+					button.setText("Attivo");
+				}
+				else
+					button.setText("Disattivo");
+					
+			}
+		});
 		GridBagConstraints gbc_tglbtnNewToggleButton = new GridBagConstraints();
 		gbc_tglbtnNewToggleButton.insets = new Insets(0, 0, 5, 5);
 		gbc_tglbtnNewToggleButton.gridx = 0;

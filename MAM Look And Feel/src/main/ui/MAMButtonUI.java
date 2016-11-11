@@ -10,16 +10,16 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
@@ -43,18 +43,20 @@ public class MAMButtonUI extends BasicButtonUI
     private static Color backgroundGradientColor;
     private static Color backgroundRolloverColor;
     private static Color backgroundGradientRolloverColor;
-    private static Color backgroundRolloverActualColor;
-    private static Color backgroundGradientRolloverActualColor;
     private static Color textColor;
     private static Color textRolloverColor;
     private static Color focusRingColor;
     private static Color focusRingRolloverColor;
     private static int focusLineDistance;
 	private static Insets margin;
+	
+	//Fade Animation
 	private float transparency = 0;
 	private boolean animating = false;
-	Timer fadeInTimer;
-	Timer fadeOutTimer;
+    private static Color backgroundRolloverActualColor;
+    private static Color backgroundGradientRolloverActualColor;
+	private Timer fadeInTimer;
+	private Timer fadeOutTimer;
     
 	 public static ComponentUI createUI(JComponent c) {
 	        setupColor();
@@ -253,9 +255,7 @@ public class MAMButtonUI extends BasicButtonUI
 	 public void installUI(JComponent c)
 	 {
 		 super.installUI(c);
-		 if (c instanceof JButton)
-		 {
-			 fadeInTimer = new Timer(50, new ActionListener() {
+			 fadeInTimer = new Timer(20, new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e)
@@ -272,7 +272,7 @@ public class MAMButtonUI extends BasicButtonUI
 				}
 			});
 			 
-			 fadeOutTimer = new Timer(50, new ActionListener() {
+			 fadeOutTimer = new Timer(20 , new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e)
@@ -289,12 +289,23 @@ public class MAMButtonUI extends BasicButtonUI
 					}
 				});
 			 
-			 c.addMouseListener(new MouseListener() {
+			 c.addMouseListener(new MouseAdapter() {
 				
 				@Override
 				public void mouseReleased(MouseEvent e)
 				{
-					fadeInTimer.start();
+					Point mouse = e.getPoint();
+					Rectangle compRect = c.getBounds();
+					if (compRect.contains(mouse))
+					{
+						fadeOutTimer.stop();
+						fadeInTimer.start();
+					}
+					else
+					{
+						fadeInTimer.stop();
+					}
+					c.repaint();
 				}
 				
 				@Override
@@ -309,7 +320,7 @@ public class MAMButtonUI extends BasicButtonUI
 				{
 					fadeInTimer.stop();
 					animating = false;
-					((JButton) c).getModel().setRollover(false);
+					((AbstractButton) c).getModel().setRollover(false);
 					if (fadeOutTimer != null && !fadeOutTimer.isRunning())
 					{
 						animating = true;
@@ -323,7 +334,7 @@ public class MAMButtonUI extends BasicButtonUI
 				{
 					fadeOutTimer.stop();
 					animating = false;
-					((JButton) c).getModel().setRollover(true);
+					((AbstractButton) c).getModel().setRollover(true);
 					if (fadeInTimer != null && !fadeInTimer.isRunning())
 					{
 						animating = true;
@@ -336,10 +347,25 @@ public class MAMButtonUI extends BasicButtonUI
 				@Override
 				public void mouseClicked(MouseEvent e)
 				{
-					
+					c.repaint();
 				}
+				
+				@Override
+	            public void mouseDragged (MouseEvent e)
+	            {
+					if (c.isEnabled ())
+	                {
+	                    if (fadeInTimer == null || fadeInTimer.isRunning ())
+	                    {
+	                        c.repaint();
+	                    }
+	                    if (fadeOutTimer == null || fadeOutTimer.isRunning ())
+	                    {
+	                        c.repaint();
+	                    }
+	                }
+	            }
 			});
-		 }
 	 }
 
 	 private static void setupColor()
