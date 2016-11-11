@@ -57,6 +57,7 @@ public class MAMButtonUI extends BasicButtonUI
     private static Color backgroundGradientRolloverActualColor;
 	private Timer fadeInTimer;
 	private Timer fadeOutTimer;
+	private static final int TIMER_INTERVAL = 20;
     
 	 public static ComponentUI createUI(JComponent c) {
 	        setupColor();
@@ -255,7 +256,7 @@ public class MAMButtonUI extends BasicButtonUI
 	 public void installUI(JComponent c)
 	 {
 		 super.installUI(c);
-			 fadeInTimer = new Timer(20, new ActionListener() {
+			 fadeInTimer = new Timer(TIMER_INTERVAL, new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e)
@@ -272,7 +273,7 @@ public class MAMButtonUI extends BasicButtonUI
 				}
 			});
 			 
-			 fadeOutTimer = new Timer(20 , new ActionListener() {
+			 fadeOutTimer = new Timer(TIMER_INTERVAL , new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e)

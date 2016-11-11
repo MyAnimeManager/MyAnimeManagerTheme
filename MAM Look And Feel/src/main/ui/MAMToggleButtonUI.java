@@ -54,6 +54,7 @@ public class MAMToggleButtonUI extends MAMButtonUI
     private static Color selectedActualGradientColor;
 	private Timer fadeInTimer;
 	private Timer fadeOutTimer;
+	private static final int TIMER_INTERVAL = 20;
  
     
     public static ComponentUI createUI(JComponent c) 
@@ -226,7 +227,7 @@ public class MAMToggleButtonUI extends MAMButtonUI
 	 public void installUI(JComponent c)
 	 {
 		 super.installUI(c);
-			 fadeInTimer = new Timer(50, new ActionListener() {
+			 fadeInTimer = new Timer(TIMER_INTERVAL, new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e)
@@ -245,7 +246,7 @@ public class MAMToggleButtonUI extends MAMButtonUI
 				}
 			});
 			 
-			 fadeOutTimer = new Timer(50 , new ActionListener() {
+			 fadeOutTimer = new Timer(TIMER_INTERVAL , new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e)
