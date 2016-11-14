@@ -56,13 +56,13 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 				"ToggleButtonUI", MAMPackageName + "MAMToggleButtonUI",
 				"ProgressBarUI", MAMPackageName + "MAMProgressBarUI",
                 "ComboBoxUI", MAMPackageName + "MAMComboBoxUI",
+                "SeparatorUI", MAMPackageName + "MAMSeparatorUI",
+              "FileChooserUI", MAMPackageName + "MAMFileChooserUI",
 //              "DesktopIconUI", MAMPackageName + "MAMDesktopIconUI",
-//              "FileChooserUI", MAMPackageName + "MAMFileChooserUI",
 //            "InternalFrameUI", MAMPackageName + "MAMInternalFrameUI",
 //       "PopupMenuSeparatorUI", MAMPackageName + "MAMPopupMenuSeparatorUI",
 //                "ScrollBarUI", MAMPackageName + "MAMScrollBarUI",
 //               "ScrollPaneUI", MAMPackageName + "MAMScrollPaneUI",
-//                "SeparatorUI", MAMPackageName + "MAMSeparatorUI",
 //                   "SliderUI", MAMPackageName + "MAMSliderUI",
 //                "SplitPaneUI", MAMPackageName + "MAMSplitPaneUI",
 //               "TabbedPaneUI", MAMPackageName + "MAMTabbedPaneUI",
@@ -160,6 +160,9 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 		Color comboBoxSelectionForeground = Color.decode("#FFFFFF");
 		Color comboBoxArrowButtonColor = Color.GRAY;
 		Color comboBoxArrowDisabledButtonColor = Color.BLACK;
+		//SEPARATOR
+		Color separatorForeground = new Color(Color.DARK_GRAY.getRed(), Color.DARK_GRAY.getRed(), Color.DARK_GRAY.getRed(), 0);
+		Color separatorBackground = Color.GRAY;
 		
 		//DEFAULTS
 		Object[] defaults = {
@@ -248,8 +251,11 @@ public class MAMLookAndFeel extends BasicLookAndFeel
 				"ComboBox.selectionForeground", comboBoxSelectionForeground,
 				"ComboBox.border", new LineBorder(comboBoxBorderColor, 1),
 				"ComboBox.arrowButtonColor", comboBoxArrowButtonColor,
-				"ComboBox.arrowDisabledButtonColor", comboBoxArrowDisabledButtonColor
+				"ComboBox.arrowDisabledButtonColor", comboBoxArrowDisabledButtonColor,
 				
+				//SEPARATOR
+				"Separator.background", separatorBackground,
+				"Separator.foreground", separatorForeground
 				
 		};
 		table.putDefaults(defaults);

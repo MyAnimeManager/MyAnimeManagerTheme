@@ -1,7 +1,9 @@
 package main.ui;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.Rectangle;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,17 +16,13 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import main.util.MAMComboBoxButton;
+import sun.swing.DefaultLookup;
 
 
 public class MAMComboBoxUI extends BasicComboBoxUI
 {
 	
 	private static Color backgroundColor;
-	private static Color disabledBackgroundColor;
-	private static Color foregroundColor;
-	private static Color disabledForegroundColor;
-	private static Color selectionBackgroundColor;
-	private static Color selectionForegroundColor;
 	private static Color arrowColor;
 	private static Color disabledArrowColor;
 	private static int direction = SwingConstants.SOUTH;
@@ -41,6 +39,17 @@ public class MAMComboBoxUI extends BasicComboBoxUI
         return arrowButton;
     }
 	
+	 @Override
+	    public void paint( Graphics g, JComponent c ) {
+	        hasFocus = comboBox.hasFocus();
+	        if ( !comboBox.isEditable() ) {
+	        	
+	            Rectangle r = rectangleForCurrentValue();
+	            paintCurrentValueBackground(g,r,hasFocus);
+	            paintCurrentValue(g,r,hasFocus);
+	        }
+	    }
+	    
 	@Override
 	public void installUI( JComponent c )
 	{
@@ -73,11 +82,6 @@ public class MAMComboBoxUI extends BasicComboBoxUI
 	private static void setupColor()
 	{
 		backgroundColor = UIManager.getColor("ComboBox.background");
-		disabledBackgroundColor = UIManager.getColor("ComboBox.disabledBackground");
-		foregroundColor = UIManager.getColor("ComboBox.foreground");
-		disabledForegroundColor = UIManager.getColor("ComboBox.disabledForeground");
-		selectionBackgroundColor = UIManager.getColor("ComboBox.selectionBackground");
-		selectionForegroundColor = UIManager.getColor("ComboBox.selectionForeground");
 		arrowColor = UIManager.getColor("ComboBox.arrowButtonColor");
 		disabledArrowColor = UIManager.getColor("ComboBox.arrowDisabledButtonColor");
 	}

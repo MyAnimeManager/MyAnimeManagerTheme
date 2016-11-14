@@ -22,6 +22,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 
 public class Test extends JFrame
@@ -65,10 +67,10 @@ public class Test extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JProgressBar progressBar = new JProgressBar();
@@ -87,8 +89,8 @@ public class Test extends JFrame
 		progressBar_1.setIndeterminate(true);
 		GridBagConstraints gbc_progressBar_1 = new GridBagConstraints();
 		gbc_progressBar_1.insets = new Insets(0, 0, 5, 0);
-		gbc_progressBar_1.fill = GridBagConstraints.BOTH;
-		gbc_progressBar_1.gridx = 1;
+		gbc_progressBar_1.fill = GridBagConstraints.VERTICAL;
+		gbc_progressBar_1.gridx = 2;
 		gbc_progressBar_1.gridy = 1;
 		contentPane.add(progressBar_1, gbc_progressBar_1);
 		
@@ -100,6 +102,16 @@ public class Test extends JFrame
 		gbc_textField.gridy = 2;
 		contentPane.add(textField, gbc_textField);
 		textField.setColumns(10);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
+		gbc_separator_1.fill = GridBagConstraints.BOTH;
+		gbc_separator_1.gridheight = 10;
+		gbc_separator_1.insets = new Insets(0, 0, 0, 5);
+		gbc_separator_1.gridx = 1;
+		gbc_separator_1.gridy = 0;
+		contentPane.add(separator_1, gbc_separator_1);
 		
 		JButton btnNewButton = new JButton("Prova");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -134,11 +146,19 @@ public class Test extends JFrame
 		gbc_rdbtnNewRadioButton.gridy = 5;
 		contentPane.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
 		
+		JSeparator separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.fill = GridBagConstraints.BOTH;
+		gbc_separator.insets = new Insets(0, 0, 5, 5);
+		gbc_separator.gridx = 0;
+		gbc_separator.gridy = 6;
+		contentPane.add(separator, gbc_separator);
+		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("New check box");
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
 		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxNewCheckBox.gridx = 0;
-		gbc_chckbxNewCheckBox.gridy = 6;
+		gbc_chckbxNewCheckBox.gridy = 8;
 		contentPane.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 		
 		JComboBox comboBox = new JComboBox();
@@ -148,7 +168,7 @@ public class Test extends JFrame
 		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 7;
+		gbc_comboBox.gridy = 9;
 		contentPane.add(comboBox, gbc_comboBox);
 	}
 	
